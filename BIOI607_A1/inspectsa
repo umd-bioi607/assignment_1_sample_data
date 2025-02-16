@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+
+def inspect_sa(index_path, sample_rate, output_path):
+    import pickle
+
+    (genome, sa) = pickle.load(open(index_path, 'rb'))
+    print(f"Genome length : {len(genome)}, len SA : {len(sa)}, last genome char {genome[-1]}")
+
+    ## iterate over the genome & suffix array together here to compute LCP values
+    ## and gather spot check values
+    lcp1_vals = []
+    spot_check = []
+
+    mean_lcp = 0
+    median_lcp = 0
+    max_lcp = 0
+    with open(output_path, 'w') as ofile:
+        ofile.write(f"{mean_lcp}\n")
+        ofile.write(f"{median_lcp}\n")
+        ofile.write(f"{max_lcp}\n")
+        ofile.write(f"{'\t'.join(spot_check)}\n")
+
+if __name__ == "__main__":
+    import sys
+    index_path = sys.argv[1]
+    sample_rate = int(sys.argv[2])
+    output = sys.argv[3]
+    inspect_sa(index_path, sample_rate, output)
